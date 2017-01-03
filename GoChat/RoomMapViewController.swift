@@ -109,7 +109,7 @@ class RoomMapViewController: UIViewController, UIImagePickerControllerDelegate, 
     // 設置Google Map的基本設定
     func setupMap(){
         let camera = GMSCameraPosition.camera(withLatitude: 20,longitude: 120, zoom: 3)
-        subView = UIView(frame: CGRect(x:0,y:0,width: view.bounds.size.width,height:350))
+        subView = UIView(frame: CGRect(x:0,y:0,width: view.bounds.size.width,height:220))
         subView.backgroundColor = UIColor.blue
         mapView = GMSMapView.map(withFrame: subView.bounds, camera: camera)
         mapView.settings.compassButton = true

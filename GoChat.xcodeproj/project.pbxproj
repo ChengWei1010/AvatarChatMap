@@ -11,13 +11,13 @@
 		79235BE91E08026500629D70 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79235BE81E08026400629D70 /* Room.swift */; };
 		794396811E18DC1800E7C145 /* RoomMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794396801E18DC1800E7C145 /* RoomMapViewController.swift */; };
 		794396831E18DC2A00E7C145 /* RoomChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794396821E18DC2A00E7C145 /* RoomChatViewController.swift */; };
-		795D6B3E1E1BFDDA008734F7 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 795D6B3D1E1BFDDA008734F7 /* Images */; };
 		79694D0A1E1B4E2400CF6EF2 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79694D091E1B4E2400CF6EF2 /* WelcomeViewController.swift */; };
+		7997B2801E1C197B001BFCE6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7997B27F1E1C197B001BFCE6 /* Assets.xcassets */; };
+		7997B2821E1C1D5B001BFCE6 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 7997B2811E1C1D5B001BFCE6 /* Images */; };
 		79A9400C1DF40B5100BA0EDB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A9400B1DF40B5100BA0EDB /* AppDelegate.swift */; };
 		79A940161DF40B5100BA0EDB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79A940141DF40B5100BA0EDB /* LaunchScreen.storyboard */; };
 		79A9403A1DF40B7900BA0EDB /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A940391DF40B7900BA0EDB /* LoginViewController.swift */; };
 		79A940441DF423F600BA0EDB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 79A940431DF423F600BA0EDB /* GoogleService-Info.plist */; };
-		79ABC9221E18D02E00957545 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 79ABC9211E18D02E00957545 /* Assets.xcassets */; };
 		79EED0F61E0932D8005CE68F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79EED0F41E0932D8005CE68F /* Main.storyboard */; };
 		F613E4375F5A268051CC4609 /* Pods_GoChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 428C64DB960DBEEC81808B66 /* Pods_GoChat.framework */; };
 /* End PBXBuildFile section */
@@ -47,8 +47,9 @@
 		79235BE81E08026400629D70 /* Room.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Room.swift; path = GoChat/Room.swift; sourceTree = "<group>"; };
 		794396801E18DC1800E7C145 /* RoomMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RoomMapViewController.swift; path = GoChat/RoomMapViewController.swift; sourceTree = "<group>"; };
 		794396821E18DC2A00E7C145 /* RoomChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RoomChatViewController.swift; path = GoChat/RoomChatViewController.swift; sourceTree = "<group>"; };
-		795D6B3D1E1BFDDA008734F7 /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Images; sourceTree = "<group>"; };
 		79694D091E1B4E2400CF6EF2 /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WelcomeViewController.swift; path = GoChat/WelcomeViewController.swift; sourceTree = "<group>"; };
+		7997B27F1E1C197B001BFCE6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		7997B2811E1C1D5B001BFCE6 /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Images; sourceTree = "<group>"; };
 		79A940081DF40B5100BA0EDB /* GoChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GoChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		79A9400B1DF40B5100BA0EDB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		79A940151DF40B5100BA0EDB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -58,7 +59,6 @@
 		79A940391DF40B7900BA0EDB /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = GoChat/LoginViewController.swift; sourceTree = "<group>"; };
 		79A940431DF423F600BA0EDB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		79A940471DF44E4B00BA0EDB /* GoChat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GoChat.entitlements; sourceTree = "<group>"; };
-		79ABC9211E18D02E00957545 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		79EED0F51E0932D8005CE68F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D7D71F43EE50A672340D65DB /* Pods-GoChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GoChat.release.xcconfig"; path = "Pods/Target Support Files/Pods-GoChat/Pods-GoChat.release.xcconfig"; sourceTree = "<group>"; };
 		E06D059826A3C0DCB109C4C3 /* libPods-GoChatTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GoChatTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -166,8 +166,8 @@
 		79A9400A1DF40B5100BA0EDB /* GoChat */ = {
 			isa = PBXGroup;
 			children = (
-				795D6B3D1E1BFDDA008734F7 /* Images */,
-				79ABC9211E18D02E00957545 /* Assets.xcassets */,
+				7997B27F1E1C197B001BFCE6 /* Assets.xcassets */,
+				7997B2811E1C1D5B001BFCE6 /* Images */,
 				79A940471DF44E4B00BA0EDB /* GoChat.entitlements */,
 				79A9400B1DF40B5100BA0EDB /* AppDelegate.swift */,
 				79A940171DF40B5100BA0EDB /* Info.plist */,
@@ -299,11 +299,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7997B2821E1C1D5B001BFCE6 /* Images in Resources */,
 				79A940161DF40B5100BA0EDB /* LaunchScreen.storyboard in Resources */,
 				79A940441DF423F600BA0EDB /* GoogleService-Info.plist in Resources */,
-				79ABC9221E18D02E00957545 /* Assets.xcassets in Resources */,
-				795D6B3E1E1BFDDA008734F7 /* Images in Resources */,
 				79EED0F61E0932D8005CE68F /* Main.storyboard in Resources */,
+				7997B2801E1C197B001BFCE6 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
