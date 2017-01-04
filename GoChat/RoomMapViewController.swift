@@ -26,6 +26,7 @@ class RoomMapViewController: UIViewController, UIImagePickerControllerDelegate, 
     //********抓出房間的根參考位址
     private lazy var roomRef: FIRDatabaseReference = FIRDatabase.database().reference().child("TripGifRooms").child("\(self.targetRoomNum)")
     
+    var targetRoomName = String("我的房間")
     var mapView: GMSMapView!
     var subView: UIView!
     var locationManager = CLLocationManager()
@@ -37,9 +38,11 @@ class RoomMapViewController: UIViewController, UIImagePickerControllerDelegate, 
     let uuid: String =  UIDevice.current.identifierForVendor!.uuidString
     
     override func viewDidLoad() {
-        observeRoomName()               //function從firebase中抓出所輸入房號的房間名
-        print(targetRoomNum)
-        title = targetRoomNum           //將此頁面標題設為房間名字
+        super.viewDidLoad()
+        observeRoomName()                  //function從firebase中抓出所輸入房號的房間名
+        title = targetRoomName        //將此頁面標題設為房間名字
+        print("目前房號\(targetRoomNum)")
+        print("目前房名\(targetRoomName)")
         
         // Location Manager
         locationManager.delegate = self
@@ -84,7 +87,8 @@ class RoomMapViewController: UIViewController, UIImagePickerControllerDelegate, 
                 (snapshot: FIRDataSnapshot) in
             let roomName = snapshot.value as! String
             print("目前房間名稱\(roomName)")
-            self.targetRoomNum = roomName
+            self.targetRoomName = roomName
+            self.title = self.targetRoomNum + (" ") + roomName
         }
     }
     

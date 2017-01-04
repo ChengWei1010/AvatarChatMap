@@ -5,7 +5,6 @@
 //  Created by 鄭薇 on 2017/1/1.
 //  Copyright © 2017年 LilyCheng. All rights reserved.
 //
-
 import UIKit
 import JSQMessagesViewController
 import MobileCoreServices
@@ -43,15 +42,30 @@ class RoomChatViewController: JSQMessagesViewController {
         super.viewDidLoad()
         print("進來了...我要進的房號是" + self.targetRoomNum)
         //print(messageRef)
-        //observeUsers()
+        
+        //舊的observeUsers()
         observeMessages()
         //print("大頭照陣列\(avatarDict[uuid])")
         
         // set avatars
         collectionView?.collectionViewLayout.incomingAvatarViewSize = CGSize(width: kJSQMessagesCollectionViewAvatarSizeDefault, height: kJSQMessagesCollectionViewAvatarSizeDefault)
         collectionView?.collectionViewLayout.outgoingAvatarViewSize = CGSize(width: kJSQMessagesCollectionViewAvatarSizeDefault, height: kJSQMessagesCollectionViewAvatarSizeDefault)
+        
+        if let currentUser = FIRAuth.auth()?.currentUser{
+            //self.senderId = currentUser.uid
+            self.senderId = uuid
+            if currentUser.isAnonymous == true
+            {
+                //根據roomUser senderId(uuid)去資料庫抓user的senderName
+                //observeUsers(uuid: senderId)
+            }else{
+                //不會用到這裡
+                self.senderId = FIRAuth.auth()?.currentUser?.uid
+                self.senderDisplayName = ""
+            }
+        }
     }
-//較慢，是讀所有用戶的方法
+//舊的，讀較慢
 //    func observeUsers(){
 //        print("start observe user")
 //        FIRDatabase.database().reference().child("TripGifUsers")
@@ -67,7 +81,6 @@ class RoomChatViewController: JSQMessagesViewController {
 //                }
 //        }
 //    }
-    //觀測單一用戶
     func observeUser(uuid:String){
         FIRDatabase.database().reference().child("TripGifUsers").child(uuid).observe(.value, with:{
             snapshot in
@@ -105,7 +118,6 @@ class RoomChatViewController: JSQMessagesViewController {
                 let senderName = dict["senderName"] as! String
                 
                 self.observeUser(uuid:senderId)
-                //舊方法self.observeUsers()
                 
                 switch mediaType{
                 case "TEXT":
@@ -251,20 +263,6 @@ class RoomChatViewController: JSQMessagesViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func logoutDidTapped(_ sender: Any) {
-        //Create a main storyboard instance
-        //        let storyboard = UIStoryboard(name : "Main", bundle: nil)
-        //
-        //        //From main storyboard instantiate a View controller
-        //        let LoginVC = storyboard.instantiateViewController(withIdentifier:"LoginVC")as!LoginViewController
-        //        //Get the app delegate
-        //        let appDelegate = UIApplication.shared.delegate as!AppDelegate
-        //
-        //        //Set Login Conteoller as root view controller
-        //        appDelegate.window?.rootViewController = LoginVC
-        
-        self.performSegue(withIdentifier: "BackToRoom", sender: nil)
-    }
     /*
      // MARK: - Navigation
      // In a storyboard-based application, you will often want to do a little preparation before navigation
