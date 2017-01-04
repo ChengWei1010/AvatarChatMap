@@ -121,18 +121,19 @@ class RoomChatViewController: JSQMessagesViewController {
                 
                 switch mediaType{
                 case "TEXT":
-                    let text = dict["text"]as!String
+                    let text = dict["text"] as! String
                     self.messages.append(JSQMessage(senderId: senderId, displayName: senderName, text: text))
                 case "PHOTO":
                     let fileUrl = dict["fileUrl"] as! String
-                    let url = NSURL(string: fileUrl)                        //把url轉成NSURL
+                    let url = NSURL(string: fileUrl) //把url轉成NSURL
                     let data = NSData(contentsOf: url as! URL)
                     let picture = UIImage(data: data as! Data)
                     let photo = JSQPhotoMediaItem(image: picture)
                     self.messages.append(JSQMessage(senderId: senderId, displayName: senderName, media: photo))
-                    if self.senderId == senderId{                           //bubble tail turn right
+                    
+                    if self.senderId == senderId{//bubble tail turn right
                         photo?.appliesMediaViewMaskAsOutgoing = true
-                    }else{                                                  //bubble tail turn left
+                    }else{//bubble tail turn left
                         photo?.appliesMediaViewMaskAsOutgoing = false
                     }
                     
@@ -144,7 +145,6 @@ class RoomChatViewController: JSQMessagesViewController {
                     if self.senderId == senderId{                           //bubble tail turn right
                         videoItem?.appliesMediaViewMaskAsOutgoing = true
                     }else{                                                  //bubble tail turn left
-                        
                         videoItem?.appliesMediaViewMaskAsOutgoing = false
                     }
                 default:
@@ -188,8 +188,8 @@ class RoomChatViewController: JSQMessagesViewController {
         print(type)
         let mediaPicker = UIImagePickerController()
         mediaPicker.delegate = self
-        mediaPicker.mediaTypes = [type as String]                    //因為CFString不是string，所以要判斷時要轉成string型態
-        self.present(mediaPicker, animated:true, completion:nil)
+        mediaPicker.mediaTypes = [type as String]                   //因為CFString不是string，所以要判斷時要轉成string型態
+        self.present(mediaPicker, animated: true, completion: nil)
     }
     
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageDataForItemAt indexPath: IndexPath!) -> JSQMessageData! {
@@ -272,20 +272,17 @@ class RoomChatViewController: JSQMessagesViewController {
      }
      */
     
-    func sendMedia(picture:UIImage?, video:NSURL?){
-        print (picture!)
-        print(FIRStorage.storage().reference())
-        if let picture = picture{ //Media是照片
-            let filePath = "\(FIRAuth.auth()!.currentUser!)/\(NSDate.timeIntervalSinceReferenceDate)"
+    func sendMedia(picture: UIImage?, video: NSURL?){   //把照片send然後存到Firebse Database
+        print(picture)
+        print(FIRStorage.storage().reference())         //印出Firebase Storage的URL
+        if let picture = picture{                       //Media是照片
+            let filePath = "\(uuid)/\(NSDate.timeIntervalSinceReferenceDate)"
             //用目前使用者和時間來區別不同的filePath
             print(filePath)
-            let data = UIImageJPEGRepresentation(picture, 0.1)
-            // return image as JPEG, 1表示不壓縮，把UIImage轉成NSData
+            let data = UIImageJPEGRepresentation(picture, 0.1)// return image as JPEG, 1表示部壓縮，把UIImage轉成NSData
             let metadata = FIRStorageMetadata()
             metadata.contentType = "image/jpg"
-            
-            FIRStorage.storage().reference().child(filePath).put(data!, metadata: metadata){(metadata, error) in
-                //child:存照片的地方, put:上傳照片到storage
+            FIRStorage.storage().reference().child(filePath).put(data!, metadata: metadata){(metadata, error) in //child:存照片的地方, put:上傳照片到storage
                 if error != nil{
                     print(error?.localizedDescription)
                     return
@@ -297,22 +294,20 @@ class RoomChatViewController: JSQMessagesViewController {
                 newMessage.setValue(messageData)
             }
         }else if let video = video{
-            let filePath = "\(uuid)/\(NSDate.timeIntervalSinceReferenceDate)"
+            let filePath = "\(uuid)/\(NSDate.timeIntervalSinceReferenceDate)" //用目前使用者和時間來區別不同的filePath
             print(filePath)
-            let data = NSData(contentsOf:video as URL)
+            let data = NSData(contentsOf: video as URL)// return video as NSData
             let metadata = FIRStorageMetadata()
-            metadata.contentType = "video/mp4"
-            FIRStorage.storage().reference().child(filePath).put(data! as Data, metadata: metadata){(metadata, error)
-                in
+            metadata.contentType = "vedio/mp4"
+            FIRStorage.storage().reference().child(filePath).put(data! as Data, metadata: metadata){(metadata, error) in //child:存照片的地方, put:上傳照片到storage
                 if error != nil{
-                    print("there's an error")
-                    //print(error.localizedDescription)
+                    print(error?.localizedDescription)
                     return
                 }
-                let fileURL = metadata!.downloadURLs![0].absoluteString
-                
+                //print(metadata)
+                let fileUrl = metadata!.downloadURLs![0].absoluteString //!:not nil, Get the URL string from URL
                 let newMessage = self.messageRef.childByAutoId()
-                let messageData = ["fileURL":fileURL, "senderId":self.senderId, "senderName":self.senderDisplayName, "MediaType":"VIDEO"]
+                let messageData = ["fileUrl": fileUrl, "senderId": self.senderId, "senderName": self.senderDisplayName, "MediaType": "VIDEO"]
                 newMessage.setValue(messageData)
             }
         }
@@ -320,11 +315,13 @@ class RoomChatViewController: JSQMessagesViewController {
 }
 
 extension RoomChatViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
-    private func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         //print("完成選擇媒體")
         //get the image info 可能之後有GPS資訊
         print(info)
         if let picture = info[UIImagePickerControllerOriginalImage] as? UIImage{//訊息是照片
+            //let photo = JSQPhotoMediaItem(image: picture) //轉成JSQMessage
+            //messages.append(JSQMessage(senderId: senderId, displayName: senderDisplayName, media: photo)) //讓message呈現照片
             sendMedia(picture: picture, video: nil)
         }
         else if let video = info[UIImagePickerControllerMediaURL]as? NSURL{
