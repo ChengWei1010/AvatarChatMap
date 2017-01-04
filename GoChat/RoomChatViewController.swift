@@ -43,44 +43,41 @@ class RoomChatViewController: JSQMessagesViewController {
         super.viewDidLoad()
         print("進來了...我要進的房號是" + self.targetRoomNum)
         //print(messageRef)
-        
-        observeUsers()
+        //observeUsers()
         observeMessages()
         //print("大頭照陣列\(avatarDict[uuid])")
         
         // set avatars
         collectionView?.collectionViewLayout.incomingAvatarViewSize = CGSize(width: kJSQMessagesCollectionViewAvatarSizeDefault, height: kJSQMessagesCollectionViewAvatarSizeDefault)
         collectionView?.collectionViewLayout.outgoingAvatarViewSize = CGSize(width: kJSQMessagesCollectionViewAvatarSizeDefault, height: kJSQMessagesCollectionViewAvatarSizeDefault)
-        
-        if let currentUser = FIRAuth.auth()?.currentUser{
-            //self.senderId = currentUser.uid
-            self.senderId = uuid
-            if currentUser.isAnonymous == true
-            {
-                //根據roomUser senderId(uuid)去資料庫抓user的senderName                
-                //observeUsers(uuid: senderId)
-            }else{
-                //不會用到這裡
-                self.senderId = FIRAuth.auth()?.currentUser?.uid
-                self.senderDisplayName = ""
-            }
-        }
     }
-    
-    func observeUsers(){
-        print("start observe user")
-        FIRDatabase.database().reference().child("TripGifUsers")
-            .observe(FIRDataEventType.value){
-                (snapshot: FIRDataSnapshot) in
-                for child in snapshot.children.allObjects as! [FIRDataSnapshot]{
-                    let chatdict = child.value as! [String:AnyObject]
-                    //print("my user picture dict\(chatdict)")
-                    let avatarUrl = chatdict["UserImgUrl"] as! String
-                    let currentId = chatdict["uuid"] as! String
-                    //print("i want url\(avatarUrl)currentId\(currentId)")
-                    self.setupAvatar(url: avatarUrl, messageId: currentId)
-                }
-        }
+//較慢，是讀所有用戶的方法
+//    func observeUsers(){
+//        print("start observe user")
+//        FIRDatabase.database().reference().child("TripGifUsers")
+//            .observe(FIRDataEventType.value){
+//                (snapshot: FIRDataSnapshot) in
+//                for child in snapshot.children.allObjects as! [FIRDataSnapshot]{
+//                    let chatdict = child.value as! [String:AnyObject]
+//                    //print("my user picture dict\(chatdict)")
+//                    let avatarUrl = chatdict["UserImgUrl"] as! String
+//                    let currentId = chatdict["uuid"] as! String
+//                    //print("i want url\(avatarUrl)currentId\(currentId)")
+//                    self.setupAvatar(url: avatarUrl, messageId: currentId)
+//                }
+//        }
+//    }
+    //觀測單一用戶
+    func observeUser(uuid:String){
+        FIRDatabase.database().reference().child("TripGifUsers").child(uuid).observe(.value, with:{
+            snapshot in
+            if let dict = snapshot.value as? [String:AnyObject]
+            {
+                let avatarUrl = dict["UserImgUrl"] as! String
+                
+                self.setupAvatar(url: avatarUrl, messageId: uuid)
+            }
+        })
     }
     func setupAvatar(url: String, messageId:String){
         if url != ""{
@@ -107,7 +104,8 @@ class RoomChatViewController: JSQMessagesViewController {
                 let senderId = dict["senderId"] as! String
                 let senderName = dict["senderName"] as! String
                 
-                self.observeUsers()
+                self.observeUser(uuid:senderId)
+                //舊方法self.observeUsers()
                 
                 switch mediaType{
                 case "TEXT":
